@@ -105,3 +105,6 @@ venv.bak/
 
 # gurobi log-files
 gurobi.log
+
+# Audiofiles
+/IDMT-SMT-GUITAR_V2
