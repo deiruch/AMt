@@ -13,4 +13,7 @@ dependencies:
     - scipy
     - untangle
     - pandas
+    - scikit-learn
 
+-pip: 
+    - soundfile
