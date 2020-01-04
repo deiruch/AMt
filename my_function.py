@@ -153,8 +153,9 @@ def metric(target_v, approx_v):
         diff_sum(numpy.float64):The sum of differences which is normalised.   
 
     """
-    norm_v = norm_vec(approx_v)
-    diff = target_v - norm_v
+    #norm_v = norm_vec(approx_v) # 03.01.2020, Normierung wird beim GRB.BINARY nicht benötigt
+    #diff = target_v - norm_v # 03.01.2020, Normierung wird beim GRB.BINARY nicht benötigt  
+    diff = target_v - approx_v
     diff_sum = np.sum(np.abs(diff))
     return diff_sum  
 
@@ -177,7 +178,7 @@ def vec_to_pitch(vec):
         pitch_act += 1
     return pitch
 
-def read_xml_to_df(path, df_cols, offset_sec, duration_sec, sampl_fac):
+def read_xml_to_df(path, df_cols, offset_sec, duration_sec, sampl_fac, num_data_points):
     """ Converts an xml file to a dataframe.
 
     Args:
@@ -186,6 +187,7 @@ def read_xml_to_df(path, df_cols, offset_sec, duration_sec, sampl_fac):
         offset_sec(float): The onset where the signal starts. 
         duration_sec(float): The duration of the signal
         sampl_fac(int): A number n where it lowers the sample datapoints to 1/n
+        num_data_points(int): Defines the number of data points
 
     Returns:
         df(data frame): The converted xml file as a dataframe.
@@ -236,12 +238,12 @@ def read_xml_to_df(path, df_cols, offset_sec, duration_sec, sampl_fac):
                             freq, fourier = new_fft(data_snip, rate_snip)
                                                        
                         elif elem == 'amplitude':
-                            event_data.append(fourier[:50])
-                            #event_data.append(fourier[:50]*fourier[:50])
+                            event_data.append(fourier[:num_data_points])
+                            #event_data.append(fourier[:num_data_points]*fourier[:num_data_points])
 
 
                         elif elem == 'frequency':
-                            event_data.append(freq[:50])
+                            event_data.append(freq[:num_data_points])
                         else:
                             event_data.append(None)
                     else:
