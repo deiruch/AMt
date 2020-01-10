@@ -153,9 +153,9 @@ def metric(target_v, approx_v):
         diff_sum(numpy.float64):The sum of differences which is normalised.   
 
     """
-    #norm_v = norm_vec(approx_v) # 03.01.2020, Normierung wird beim GRB.BINARY nicht benötigt
-    #diff = target_v - norm_v # 03.01.2020, Normierung wird beim GRB.BINARY nicht benötigt  
-    diff = target_v - approx_v
+    norm_v = norm_vec(approx_v)
+    diff = target_v - norm_v
+    #diff = target_v - approx_v
     diff_sum = np.sum(np.abs(diff))
     return diff_sum  
 

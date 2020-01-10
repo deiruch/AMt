@@ -16,6 +16,8 @@ def plot_freq_domain(freq, fourier, name):
     plt.xlabel('frequency [Hz]')
     plt.ylabel('amplitude')
     plt.xlim(0, 1400)
+    plt.xticks(np.arange(0, 1500, 100))
+    plt.grid(which='both')
     plt.title(name)
     plt.show()
 
@@ -55,54 +57,7 @@ def plot_hist(all_pitches, ref_min, ref_max, width, height):
     plt.close(fig)
     return fig
 
-#def plot_bar(df, tone_index, width, height, threshold):
-#    """ Shows a distribution of the pitches in all files used.
-#
-#    Args:
-#        df (dataframe): A dataframe which contains all the test data.
-#       tone_index(int): A index of a tone which is to be analysed.
-#           width (int): Width size of the plot.
-#          height (int): Height size of the plot.
-#     threshold (float): 
-#                         
-#    Returns:
-#        A histogramm of the pitch distribution of all files.
-#    """
-#
-#    pitch_list = np.arange(40, 77, 1)
-#    
-#    
-#    #create plot
-#    fig_thresh, ax = plt.subplots(figsize = (width, height))
-#    index = len(pitch_list)-1
-#
-#    bar_width = 0.3
-#    opacity = 0.9
-#
-#    target_rects = plt.bar(pitch_list, df.target_vec[tone_index], 
-#                           bar_width, alpha = opacity, label='target_vec', color='#3266a8')
-#
-#    thresh_rects = plt.bar(pitch_list + 2*bar_width, df.thresholded_vec[tone_index], 
-#                           bar_width, alpha = opacity, label='thresh_vec', color='#00b82b')
-#
-#    pred_rects = plt.bar(pitch_list + bar_width, df.norm_pred_vec[tone_index], 
-#                         bar_width, alpha = opacity, label='norm_pred_vec',color='orange')
-#
-#
-#    plt.axhline(linewidth=1, color='r', y=threshold, label='threshold')
-#
-#    plt.xticks(pitch_list + bar_width, pitch_list)
-#    plt.xlim(pitch_list[0]-0.5, pitch_list[index]+1)
-#    ax.set_title('pitch detection')
-#    ax.set_ylabel('intensity')
-#    ax.set_xlabel('pitch')
-#    plt.tight_layout()
-#    plt.title('Index des Tons: ' + str(tone_index))
-#    plt.legend()
-#    plt.close(fig_thresh)
-#    return fig_thresh
-
-def plot_bar(df, tone_index, width, height):
+def plot_bar(df, tone_index, width, height, threshold):
     """ Shows a distribution of the pitches in all files used.
 
     Args:
@@ -110,6 +65,7 @@ def plot_bar(df, tone_index, width, height):
        tone_index(int): A index of a tone which is to be analysed.
            width (int): Width size of the plot.
           height (int): Height size of the plot.
+     threshold (float): 
                          
     Returns:
         A histogramm of the pitch distribution of all files.
@@ -127,16 +83,16 @@ def plot_bar(df, tone_index, width, height):
     target_rects = plt.bar(pitch_list, df.target_vec[tone_index], 
                            bar_width, alpha = opacity, label='target_vec', color='#3266a8')
 
-    #thresh_rects = plt.bar(pitch_list + 2*bar_width, df.thresholded_vec[tone_index], 
-    #                       bar_width, alpha = opacity, label='thresh_vec', color='#00b82b')
+    thresh_rects = plt.bar(pitch_list + 2*bar_width, df.thresholded_vec[tone_index], 
+                           bar_width, alpha = opacity, label='thresh_vec', color='#00b82b')
 
-    pred_rects = plt.bar(pitch_list + bar_width, df.pred_vec[tone_index], 
-                         bar_width, alpha = opacity, label='pred_vec',color='orange')
+    pred_rects = plt.bar(pitch_list + bar_width, df.norm_pred_vec[tone_index], 
+                         bar_width, alpha = opacity, label='norm_pred_vec',color='orange')
 
 
-    #plt.axhline(linewidth=1, color='r', y=threshold, label='threshold')
+    plt.axhline(linewidth=1, color='r', y=threshold, label='threshold')
 
-    plt.xticks(pitch_list + bar_width/2, pitch_list)
+    plt.xticks(pitch_list + bar_width, pitch_list)
     plt.xlim(pitch_list[0]-0.5, pitch_list[index]+1)
     ax.set_title('pitch detection')
     ax.set_ylabel('intensity')
