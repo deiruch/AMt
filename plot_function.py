@@ -1,18 +1,16 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-# Frequency domain representation
-def plot_freq_domain(freq, fourier, name):
+def plot_freq_domain(freq, amplitude, name):
     """ Shows a lineplot of the given signal.
 
     Args:
-        freq (numpy.ndarray):A list with frequencies on the x axis.
-        fourier (numpy.ndarray):A list with amplitudes on the y axis.
+        freq (numpy.ndarray): A list with frequencies on the x axis.
+        amplitude (numpy.ndarray): A list with amplitudes on the y axis.
         name(str): A string which is displayed as the plot title.
-
     """
     plt.figure(figsize=(20,5))
-    plt.plot(freq, fourier)
+    plt.plot(freq, amplitude)
     plt.xlabel('frequency [Hz]')
     plt.ylabel('amplitude')
     plt.xlim(0, 1400)
@@ -21,21 +19,21 @@ def plot_freq_domain(freq, fourier, name):
     plt.title(name)
     plt.show()
 
+    
 def plot_hist(all_pitches, ref_min, ref_max, width, height):
     """ Shows a distribution of the pitches in all files used.
 
     Args:
         all_pitches (list): A list which contains all pitches which are used.
-             ref_min (int): The minimum pitch value of the reference note.
-             ref_max (int): The maximum pitch value of the reference note.
-               width (int): Width size of the plot.
-              height (int): height size of the plot.
+        ref_min (int): The minimum pitch value of the reference note.
+        ref_max (int): The maximum pitch value of the reference note.
+        width (int): Width of the plot.
+        height (int): Height of the plot.
                                   
     Returns:
         A histogramm of the pitch distribution of all files.
     """
-    
-    # plot figure        
+         
     fig, ax = plt.subplots(figsize = (width, height)) 
     bins = np.arange(min(all_pitches), max(all_pitches)+1)
     plt.xlim([min(all_pitches)-2, max(all_pitches)+2])
@@ -57,23 +55,23 @@ def plot_hist(all_pitches, ref_min, ref_max, width, height):
     plt.close(fig)
     return fig
 
+
 def plot_bar(df, tone_index, width, height, threshold):
-    """ Shows a distribution of the pitches in all files used.
+    """ Shows a bar plot of the detected pitches.
 
     Args:
         df (dataframe): A dataframe which contains all the test data.
-       tone_index(int): A index of a tone which is to be analysed.
-           width (int): Width size of the plot.
-          height (int): Height size of the plot.
-     threshold (float): 
+        tone_index(int): A index of a tone which is to be analysed.
+        width (int): Width of the plot.
+        height (int): Height of the plot.
+        threshold (float): A value which define if a tone is a 1 or a 0.
                          
     Returns:
-        A histogramm of the pitch distribution of all files.
+        A bar plot of the detected pitches.
     """
 
     pitch_list = np.arange(40, 77, 1)
     
-    #create plot
     fig, ax = plt.subplots(figsize = (width, height))
     index = len(pitch_list)-1
 
@@ -103,14 +101,15 @@ def plot_bar(df, tone_index, width, height, threshold):
     plt.close(fig)
     return fig
 
+
 def plot_box(mono_score, poly_score, width, height):
     """ Shows a distribution of the pitch score.
 
     Args:
-        mono_score (pandas.core.series.Series): A list with frequencies on the x axis.
-        poly_score (pandas.core.series.Series): A list with amplitudes on the y axis.
-                                   width (int): Width size of the plot.
-                                  height (int): height size of the plot.
+        mono_score (pandas.core.series.Series): A list of all calculated scores for each monophonics.
+        poly_score (pandas.core.series.Series): A list of all calculated scores for each polyphonics.
+        width (int): Width of the plot.
+        height (int): Height of the plot.
                                   
     Returns:
         A distribution of the pitch scores as a boxplot.
@@ -132,23 +131,24 @@ def plot_box(mono_score, poly_score, width, height):
     plt.close(fig)
     return fig
 
-def plot_scatter(x_value, y_value, width, height):
-    """ Shows a scatterplot of the pitch detection.
+
+def plot_scatter(pitch_pred, pitch_target, width, height):
+    """ Shows a scatterplot of the mono pitch detection.
 
     Args:
-        x_value (list): A list with the range of all pitches.
-        y_value (list): A list with the range of all pitches.
-         width (int): Width size of the plot.
-        height (int): height size of the plot. 
+        pitch_pred (list): A list with all predicted pitches.
+        pitch_target (list): A list with all target pitches.
+        width (int): Width of the plot.
+        height (int): Height of the plot. 
         
     Returns:
-        A scatterplot of the detected pitches.
+        A scatterplot of the detected mono pitches.
     """
 
     fig, ax = plt.subplots(figsize = (width, height))
-    ax.scatter(x_value, y_value, color='#00b82b', s=10)
+    ax.scatter(pitch_pred, pitch_target, color='#00b82b', s=10)
     ax.set_xlabel('pitch pred')
-    ax.set_ylabel('pitch')
+    ax.set_ylabel('pitch target')
     ax.set_title('monophonic detection')
     plt.xticks(np.arange(40, 96, 5))
     plt.yticks(np.arange(40, 96, 5))
