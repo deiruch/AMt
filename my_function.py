@@ -77,7 +77,7 @@ def calc_target_vec(pitch):
                     pitch_vec.append(0)
             combi_vec.append(pitch_vec)
         else:
-            print('Pitch does not lie within the range({} - {})!'.format(pitch, pitch_start, pitch_end))
+            print('Pitch {} does not lie within the range({} - {})!'.format(pitch, pitch_start, pitch_end))
             return[0] * (pitch_end - pitch_start + 1) # for harmonics
     target_vec = [sum(x) for x in zip(*combi_vec)]
     return np.asarray(target_vec)
