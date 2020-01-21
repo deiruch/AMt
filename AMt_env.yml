@@ -11,10 +11,9 @@ dependencies:
     - jupyter
     - matplotlib
     - scipy
-    - untangle
     - pandas
     - scikit-learn
     - panel
 
--pip: 
+- pip: 
     - soundfile
